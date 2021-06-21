@@ -1,7 +1,6 @@
-package com.abramchuk.itbookstore.ui.newBooks
+package com.abramchuk.itbookstore.ui.books
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +15,7 @@ import com.abramchuk.itbookstore.dto.Book
 import com.abramchuk.itbookstore.manager.BookManager
 import com.abramchuk.itbookstore.manager.NetworkManager
 import com.abramchuk.itbookstore.ui.BookClickListener
+import com.abramchuk.itbookstore.ui.adapter.BooksAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -45,7 +45,7 @@ class NewBooksFragment : Fragment(), BookClickListener {
 
         GlobalScope.launch(Dispatchers.IO) {
             val books = if (nm?.isConnectedToInternet!!) {
-                bookManager.downloadNewBooks()
+                bookManager.getApiNewBooks()
             } else {
                 listOf()
             }
@@ -59,7 +59,7 @@ class NewBooksFragment : Fragment(), BookClickListener {
 
     private fun showUi(data: List<Book>) {
         val recyclerView: RecyclerView? = view?.findViewById(R.id.recyclerView)
-        recyclerView?.adapter = NewBooksAdapter(data, this@NewBooksFragment)
+        recyclerView?.adapter = BooksAdapter(data, this@NewBooksFragment)
     }
 
     override fun onCellClickListener(item: Book, position: Int) {

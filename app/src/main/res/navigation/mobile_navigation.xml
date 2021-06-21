@@ -28,7 +28,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.abramchuk.itbookstore.ui.newBooks.NewBooksFragment"
+        android:name="com.abramchuk.itbookstore.ui.books.NewBooksFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_new_books" >
         <action
@@ -38,7 +38,7 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.abramchuk.itbookstore.ui.bookSearch.BookSearchFragment"
+        android:name="com.abramchuk.itbookstore.ui.books.BookSearchFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_book_search" >
         <action
@@ -47,7 +47,7 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_bookSearch"
-        android:name="com.abramchuk.itbookstore.ui.foundBooks.FoundBooksFragment"
+        android:name="com.abramchuk.itbookstore.ui.books.FoundBooksFragment"
         android:label="Search"
         tools:layout="@layout/fragment_found_books" >
         <action
@@ -56,7 +56,7 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.abramchuk.itbookstore.ui.favourites.FavouritesFragment"
+        android:name="com.abramchuk.itbookstore.ui.books.FavouritesFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_favourites" >
         <action
@@ -68,7 +68,7 @@
     </fragment>
     <fragment
         android:id="@+id/bookInfoFragment"
-        android:name="com.abramchuk.itbookstore.ui.bookinfo.BookInfoFragment"
+        android:name="com.abramchuk.itbookstore.ui.books.BookInfoFragment"
         android:label="fragment_book_info"
         tools:layout="@layout/fragment_book_info" />
 

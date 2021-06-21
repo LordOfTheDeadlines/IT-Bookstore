@@ -16,4 +16,5 @@
     <string name="wrong_input_textview">Wrong login or password</string>
     <string name="registration">REGISTRATION</string>
     <string name="email">email</string>
+    <string name="logout">LOGOUT</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.abramchuk.itbookstore.ui.favourites
+package com.abramchuk.itbookstore.ui.books
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,7 +17,7 @@ import com.abramchuk.itbookstore.dto.Book
 import com.abramchuk.itbookstore.dto.User
 import com.abramchuk.itbookstore.manager.BookManager
 import com.abramchuk.itbookstore.ui.BookClickListener
-import com.abramchuk.itbookstore.ui.newBooks.NewBooksAdapter
+import com.abramchuk.itbookstore.ui.adapter.BooksAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
@@ -76,7 +76,7 @@ class FavouritesFragment : Fragment(), BookClickListener {
 
     private fun showUi(data: List<Book>) {
         val recyclerView: RecyclerView? = view?.findViewById(R.id.recyclerView)
-        recyclerView?.adapter = NewBooksAdapter(data, this@FavouritesFragment)
+        recyclerView?.adapter = BooksAdapter(data, this@FavouritesFragment)
     }
 
     override fun onCellClickListener(item: Book, position: Int) {

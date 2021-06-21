@@ -1,4 +1,4 @@
-package com.abramchuk.itbookstore.ui.bookinfo
+package com.abramchuk.itbookstore.ui.books
 
 import android.content.Intent
 import android.os.Bundle
@@ -37,7 +37,7 @@ class BookInfoFragment : Fragment() {
         bookManager = BookManager(requireContext())
 
         GlobalScope.launch(Dispatchers.IO) {
-            val book = bookManager.getBooksISBN13(bookId)
+            val book = bookManager.getBooksByISBN13(bookId)
             val isFavBtn = binding?.isFavouriteBtn
             val shareBtn = binding?.shareBtn
             var isFav: Boolean?
@@ -80,14 +80,14 @@ class BookInfoFragment : Fragment() {
                     if(isFavBtn.isChecked){
                         GlobalScope.launch(Dispatchers.IO) {
                             withContext(Dispatchers.IO) {
-                                bookManager.likeBook(book)
+                                bookManager.addToFavourites(book)
                             }
                         }
                     }
                     else{
                         GlobalScope.launch(Dispatchers.IO) {
                             withContext(Dispatchers.IO) {
-                                bookManager.dislikeBook(book)
+                                bookManager.deleteFromFavourites(book)
                             }
                         }
                     }

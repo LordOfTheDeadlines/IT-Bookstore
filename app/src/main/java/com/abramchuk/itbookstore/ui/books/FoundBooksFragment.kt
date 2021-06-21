@@ -1,11 +1,13 @@
-package com.abramchuk.itbookstore.ui.foundBooks
+package com.abramchuk.itbookstore.ui.books
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -16,9 +18,9 @@ import com.abramchuk.itbookstore.databinding.FragmentFoundBooksBinding
 import com.abramchuk.itbookstore.dto.Book
 import com.abramchuk.itbookstore.manager.BookManager
 import com.abramchuk.itbookstore.manager.NetworkManager
-import com.abramchuk.itbookstore.modules.BookSearchViewModelFactory
 import com.abramchuk.itbookstore.ui.BookClickListener
-import com.abramchuk.itbookstore.ui.newBooks.NewBooksAdapter
+import com.abramchuk.itbookstore.ui.adapter.PagingBooksAdapter
+import com.abramchuk.itbookstore.ui.adapter.BooksAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -50,7 +52,7 @@ class FoundBooksFragment : Fragment(), BookClickListener {
         GlobalScope.launch(Dispatchers.IO) {
             val books : List<Book>
             if (nm?.isConnectedToInternet!!) {
-                val bookSearchAdapter = FoundBooksAdapter(this@FoundBooksFragment)
+                val bookSearchAdapter = PagingBooksAdapter(this@FoundBooksFragment)
                 withContext(Dispatchers.Main) {
                     binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
                     binding.recyclerView.setHasFixedSize(true)
@@ -62,10 +64,10 @@ class FoundBooksFragment : Fragment(), BookClickListener {
                     }
                 }
             } else {
-                books = bookManager.getBooksByName(searchStr)
+                books = bookManager.getDBBooksByTitle(searchStr)
                 withContext(Dispatchers.Main) {
                     binding.recyclerView.adapter =
-                            NewBooksAdapter(books,this@FoundBooksFragment)
+                            BooksAdapter(books,this@FoundBooksFragment)
                 }
             }
         }
@@ -85,5 +87,13 @@ class FoundBooksFragment : Fragment(), BookClickListener {
             R.id.action_bookSearchFragment_to_bookInfoFragment,
             bundle
         )
+    }
+}
+
+@Suppress("UNCHECKED_CAST")
+class BookSearchViewModelFactory(val context: Context, private val inputStr: String) :
+        ViewModelProvider.NewInstanceFactory(){
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        return FoundBooksViewModel(context, inputStr) as T
     }
 }

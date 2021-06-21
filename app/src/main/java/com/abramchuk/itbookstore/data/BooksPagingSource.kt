@@ -8,12 +8,12 @@ import com.abramchuk.itbookstore.manager.BookManager
 
 class BooksPagingSource(context: Context, private val inputStr: String) : PagingSource<Int, Book>() {
 
-    private val BOOKS_ON_PAGE = 10;
+    private val BOOKS_ON_PAGE = 10
     var bookManager = BookManager(context)
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Book> {
         return try {
             val nextPageNumber = params.key ?: 0
-            val response =  bookManager.downloadBooksByName(inputStr,nextPageNumber.toString())
+            val response =  bookManager.getApiBooksByTitle(inputStr,nextPageNumber.toString())
             LoadResult.Page(
                     data = response.books,
                     prevKey = if (nextPageNumber > 0) nextPageNumber - 1 else null,

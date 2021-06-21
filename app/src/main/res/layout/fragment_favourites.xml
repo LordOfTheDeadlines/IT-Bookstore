@@ -13,13 +13,13 @@ android:layout_height="match_parent">
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp"
-        tools:context=".ui.favourites.FavouritesFragment">
+        tools:context=".ui.books.FavouritesFragment">
 
         <Button
             android:id="@+id/logout_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="LOGOUT" />
+            android:text="@string/logout" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"

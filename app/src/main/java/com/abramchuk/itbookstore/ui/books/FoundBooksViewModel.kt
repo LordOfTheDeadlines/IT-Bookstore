@@ -1,4 +1,4 @@
-package com.abramchuk.itbookstore.ui.foundBooks
+package com.abramchuk.itbookstore.ui.books
 
 import android.content.Context
 import androidx.lifecycle.*

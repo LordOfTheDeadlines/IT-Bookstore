@@ -1,4 +1,4 @@
-package com.abramchuk.itbookstore.ui.bookSearch
+package com.abramchuk.itbookstore.ui.books
 
 import android.os.Bundle
 import android.view.LayoutInflater

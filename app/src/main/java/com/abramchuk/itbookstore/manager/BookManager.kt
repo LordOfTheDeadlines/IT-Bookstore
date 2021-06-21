@@ -21,20 +21,19 @@ class BookManager(context: Context) {
     private var userDao: UserDao? = AppDatabase.createDb(context).getUserDAO()
     private var favouritesDao: FavouritesDAO? = AppDatabase.createDb(context).getFavouritesDAO()
 
-    fun likeBook(item: BookInfo) {
+    fun addToFavourites(item: BookInfo) {
         val user = userDao!!.getActiveUser()
         favouritesDao?.insert(Favourites(user.id, item.id))
     }
 
-    fun dislikeBook(item: BookInfo) {
+    fun deleteFromFavourites(item: BookInfo) {
         val user = userDao!!.getActiveUser()
         favouritesDao?.deleteUserFavourite(user.id,item.id)
     }
 
     fun isFavourite(book:BookInfo): Boolean? {
         val user = userDao!!.getActiveUser()
-        val fav = favouritesDao?.findUserFavourite(user.id, book.id)
-        return fav?.isNotEmpty()
+        return favouritesDao?.findUserFavourite(user.id, book.id)?.isNotEmpty()
     }
 
     fun getFavourites(): List<Book> {
@@ -43,14 +42,14 @@ class BookManager(context: Context) {
         return convertFavouritesToBooks(favourites)
     }
 
-    suspend fun downloadNewBooks(): List<Book> {
+    suspend fun getApiNewBooks(): List<Book> {
         val listResponse = ApiService.getInstance().getNewBooks()
         val books = listResponse.body()?.books!!
         saveBooksToDb(books)
         return books
     }
 
-    suspend fun downloadBooksByName(title: String, page:String): BookResponse {
+    suspend fun getApiBooksByTitle(title: String, page:String): BookResponse {
         val listResponse = ApiService.getInstance().getBooksData(title, page)
         val books = listResponse.books
         GlobalScope.launch(Dispatchers.IO) {
@@ -61,7 +60,7 @@ class BookManager(context: Context) {
         return listResponse
     }
 
-    fun getBooksByName(title: String): List<Book> {
+    fun getDBBooksByTitle(title: String): List<Book> {
         val booksInfo = bookDao?.findByTitle(title)
         val books = mutableListOf<Book>()
         if (booksInfo != null) {
@@ -71,8 +70,8 @@ class BookManager(context: Context) {
         return books
     }
 
-    fun getBooksISBN13(id: String): BookInfo? {
-        return bookDao?.findByIsbn13(id)
+    fun getBooksByISBN13(isbn13: String): BookInfo? {
+        return bookDao?.findByIsbn13(isbn13)
     }
 
     private suspend fun saveBooksToDb(books: List<Book>) {
