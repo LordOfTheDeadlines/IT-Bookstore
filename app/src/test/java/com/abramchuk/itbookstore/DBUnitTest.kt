@@ -4,44 +4,39 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
 import com.abramchuk.itbookstore.db.AppDatabase
 import com.abramchuk.itbookstore.db.BookDAO
-import com.abramchuk.itbookstore.db.UserDao
+import com.abramchuk.itbookstore.db.UserDAO
 import com.abramchuk.itbookstore.dto.BookInfo
 import com.abramchuk.itbookstore.dto.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.junit.Test
-
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.Test
 import org.junit.runner.RunWith
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
+
 @RunWith(AndroidJUnit4::class)
-class DatabaseUnitTest {
+class DBUnitTest {
     private lateinit var bookDAO: BookDAO
-    private lateinit var userDao: UserDao
+    private lateinit var userDAO: UserDAO
 
     @Before
     fun setUp() {
-        val context = InstrumentationRegistry.getInstrumentation().targetContext;
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
         bookDAO = AppDatabase.createDb(context).getBookDAO()
-        userDao = AppDatabase.createDb(context).getUserDAO()
+        userDAO = AppDatabase.createDb(context).getUserDAO()
     }
 
     @Test
-    fun insert_anime_isCorrect() {
+    fun insert_book_isCorrect() {
         val book = BookInfo("title","subtitle","Author", "publisher",
                 "123","12345","100", "2018","5.00","desc",
                 "10.00$","image","url")
         GlobalScope.launch(Dispatchers.IO) {
             bookDAO.insert(book)
             val dbBook = bookDAO.findByIsbn13("12345")
-//            bookDAO.deleteAnimeById(dbBook.id)
+            bookDAO.deleteAllBooks()
             assertEquals(book.title, dbBook.title)
         }
     }
@@ -50,9 +45,9 @@ class DatabaseUnitTest {
     fun delete_user_isCorrect() {
         val user = User("admin", "admin@admin.com", "admin", false)
         GlobalScope.launch(Dispatchers.IO) {
-            userDao.insert(user)
-            userDao.deleteUserByLogin(user.login)
-            val deleted_user = userDao.getUserByLogin(user.login)
+            userDAO.insert(user)
+            userDAO.deleteUserByLogin(user.login)
+            val deleted_user = userDAO.getUserByLogin(user.login)
             assertEquals(null, deleted_user)
         }
     }

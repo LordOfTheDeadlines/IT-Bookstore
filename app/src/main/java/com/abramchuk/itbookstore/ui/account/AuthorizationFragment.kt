@@ -11,7 +11,7 @@ import androidx.navigation.Navigation
 import com.abramchuk.itbookstore.R
 import com.abramchuk.itbookstore.databinding.FragmentAuthorizationBinding
 import com.abramchuk.itbookstore.db.AppDatabase
-import com.abramchuk.itbookstore.db.UserDao
+import com.abramchuk.itbookstore.db.UserDAO
 import com.abramchuk.itbookstore.dto.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
@@ -23,13 +23,13 @@ import kotlinx.coroutines.withContext
 class AuthorizationFragment : Fragment() {
     private var binding: FragmentAuthorizationBinding?=null
     private var navController: NavController?=null
-    private var userDao : UserDao? = null
+    private var userDAO : UserDAO? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        userDao = AppDatabase.createDb(requireContext()).getUserDAO()
+        userDAO = AppDatabase.createDb(requireContext()).getUserDAO()
         binding = FragmentAuthorizationBinding.inflate(inflater, container, false)
         return binding!!.root
     }
@@ -43,7 +43,7 @@ class AuthorizationFragment : Fragment() {
         var usersFromDB: List<User>?
         GlobalScope.launch(Dispatchers.IO) {
             withContext(Dispatchers.IO) {
-                usersFromDB = userDao?.findActiveUser()
+                usersFromDB = userDAO?.findActiveUser()
                 withContext(Main){
                     if (!usersFromDB.isNullOrEmpty()) {
                         user = usersFromDB!![0]
@@ -67,10 +67,10 @@ class AuthorizationFragment : Fragment() {
         GlobalScope.launch(Dispatchers.IO) {
             withContext(Dispatchers.IO) {
                 val user: User?
-                val usersFromDB = userDao?.findUser(username, pass)
+                val usersFromDB = userDAO?.findUser(username, pass)
                 if (!usersFromDB.isNullOrEmpty()) {
                     user = usersFromDB[0]
-                    userDao?.setActive(user.id)
+                    userDAO?.setActive(user.id)
                     withContext(Main) {
                         navigateUserToGreetingFragment(username)
                     }

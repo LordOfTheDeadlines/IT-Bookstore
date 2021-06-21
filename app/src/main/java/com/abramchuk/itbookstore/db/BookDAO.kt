@@ -25,8 +25,8 @@ interface BookDAO {
     fun findByTitle(title:String) :  List<BookInfo>
 
     @Query("DELETE FROM books WHERE isbn13 = :id")
-    fun deleteFromFavourites(id:String)
+    fun deleteFromBooks(id:String)
 
     @Query("DELETE FROM books")
-    fun deleteAllFavourites()
+    fun deleteAllBooks()
 }

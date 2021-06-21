@@ -7,7 +7,7 @@ import com.abramchuk.itbookstore.dto.User
 
 
 @Dao
-interface UserDao {
+interface UserDAO {
     @Insert
     fun insert(user: User)
 

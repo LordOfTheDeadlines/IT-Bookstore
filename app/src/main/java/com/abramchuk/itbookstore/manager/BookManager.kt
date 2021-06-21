@@ -5,7 +5,7 @@ import com.abramchuk.itbookstore.ApiService
 import com.abramchuk.itbookstore.db.AppDatabase
 import com.abramchuk.itbookstore.db.BookDAO
 import com.abramchuk.itbookstore.db.FavouritesDAO
-import com.abramchuk.itbookstore.db.UserDao
+import com.abramchuk.itbookstore.db.UserDAO
 import com.abramchuk.itbookstore.dto.Book
 import com.abramchuk.itbookstore.dto.BookInfo
 import com.abramchuk.itbookstore.dto.BookResponse
@@ -18,26 +18,26 @@ import kotlinx.coroutines.withContext
 class BookManager(context: Context) {
 
     private var bookDao: BookDAO? = AppDatabase.createDb(context).getBookDAO()
-    private var userDao: UserDao? = AppDatabase.createDb(context).getUserDAO()
+    private var userDAO: UserDAO? = AppDatabase.createDb(context).getUserDAO()
     private var favouritesDao: FavouritesDAO? = AppDatabase.createDb(context).getFavouritesDAO()
 
     fun addToFavourites(item: BookInfo) {
-        val user = userDao!!.getActiveUser()
+        val user = userDAO!!.getActiveUser()
         favouritesDao?.insert(Favourites(user.id, item.id))
     }
 
     fun deleteFromFavourites(item: BookInfo) {
-        val user = userDao!!.getActiveUser()
+        val user = userDAO!!.getActiveUser()
         favouritesDao?.deleteUserFavourite(user.id,item.id)
     }
 
     fun isFavourite(book:BookInfo): Boolean? {
-        val user = userDao!!.getActiveUser()
+        val user = userDAO!!.getActiveUser()
         return favouritesDao?.findUserFavourite(user.id, book.id)?.isNotEmpty()
     }
 
     fun getFavourites(): List<Book> {
-        val user = userDao!!.getActiveUser()
+        val user = userDAO!!.getActiveUser()
         val favourites = favouritesDao?.getUserFavourites(user.id)
         return convertFavouritesToBooks(favourites)
     }

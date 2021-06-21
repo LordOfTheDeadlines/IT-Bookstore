@@ -10,7 +10,7 @@ import androidx.navigation.Navigation
 import com.abramchuk.itbookstore.R
 import com.abramchuk.itbookstore.databinding.FragmentRegistrationBinding
 import com.abramchuk.itbookstore.db.AppDatabase
-import com.abramchuk.itbookstore.db.UserDao
+import com.abramchuk.itbookstore.db.UserDAO
 import com.abramchuk.itbookstore.dto.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -20,13 +20,13 @@ import kotlinx.coroutines.withContext
 class RegistrationFragment:Fragment() {
     private var binding: FragmentRegistrationBinding?=null
     private var navController: NavController?=null
-    private var userDao : UserDao? = null
+    private var userDAO : UserDAO? = null
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View {
-        userDao = AppDatabase.createDb(requireContext()).getUserDAO()
+        userDAO = AppDatabase.createDb(requireContext()).getUserDAO()
         binding = FragmentRegistrationBinding.inflate(inflater, container, false)
         return binding!!.root
     }
@@ -49,13 +49,13 @@ class RegistrationFragment:Fragment() {
         var usersFromDB : List<User>? = null
         GlobalScope.launch(Dispatchers.IO) {
             withContext(Dispatchers.IO) {
-                usersFromDB = userDao?.getUserByLogin(username)
+                usersFromDB = userDAO?.getUserByLogin(username)
             }
         }
         if (usersFromDB.isNullOrEmpty() && username.isNotEmpty() && pass.isNotEmpty() && email.isNotEmpty()) {
             GlobalScope.launch(Dispatchers.IO) {
                 withContext(Dispatchers.IO) {
-                    userDao?.insert(User(username, email, pass, false))
+                    userDAO?.insert(User(username, email, pass, false))
                 }
             }
             navController!!.navigate(R.id.action_regFragment_to_logFragment)

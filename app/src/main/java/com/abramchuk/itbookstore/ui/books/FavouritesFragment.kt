@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.abramchuk.itbookstore.R
 import com.abramchuk.itbookstore.databinding.FragmentFavouritesBinding
 import com.abramchuk.itbookstore.db.AppDatabase
-import com.abramchuk.itbookstore.db.UserDao
+import com.abramchuk.itbookstore.db.UserDAO
 import com.abramchuk.itbookstore.dto.Book
 import com.abramchuk.itbookstore.dto.User
 import com.abramchuk.itbookstore.manager.BookManager
@@ -31,12 +31,12 @@ class FavouritesFragment : Fragment(), BookClickListener {
     private lateinit var binding: FragmentFavouritesBinding
     private lateinit var bookManager: BookManager
     private lateinit var user: User
-    private var userDao : UserDao? = null
+    private var userDAO : UserDAO? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bookManager = BookManager(requireContext())
-        userDao = AppDatabase.createDb(requireContext()).getUserDAO()
+        userDAO = AppDatabase.createDb(requireContext()).getUserDAO()
         GlobalScope.launch(Dispatchers.IO) {
             withContext(Dispatchers.IO) {
                 user = AppDatabase.createDb(requireContext()).getUserDAO().getActiveUser()
@@ -59,7 +59,7 @@ class FavouritesFragment : Fragment(), BookClickListener {
         binding.logoutBtn.setOnClickListener {
             GlobalScope.launch(Dispatchers.IO) {
                 withContext(Dispatchers.IO) {
-                    userDao?.deactivateAll()
+                    userDAO?.deactivateAll()
                 }
             }
             navController!!.navigate(R.id.action_favFragment_to_logFragment)

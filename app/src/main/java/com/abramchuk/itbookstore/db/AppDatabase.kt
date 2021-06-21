@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.abramchuk.itbookstore.dto.Book
 import com.abramchuk.itbookstore.dto.BookInfo
 import com.abramchuk.itbookstore.dto.Favourites
 import com.abramchuk.itbookstore.dto.User
@@ -13,7 +12,7 @@ import com.abramchuk.itbookstore.dto.User
 abstract class AppDatabase : RoomDatabase(){
     abstract fun getBookDAO(): BookDAO
     abstract fun getFavouritesDAO(): FavouritesDAO
-    abstract fun getUserDAO(): UserDao
+    abstract fun getUserDAO(): UserDAO
     companion object {
         fun createDb(context: Context) =
             Room.databaseBuilder(context, AppDatabase::class.java, "book").build()
