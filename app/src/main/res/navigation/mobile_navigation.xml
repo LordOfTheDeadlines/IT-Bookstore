@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/login_fragment">
+
+    <fragment
+        android:id="@+id/login_fragment"
+        android:name="com.abramchuk.itbookstore.ui.account.AuthorizationFragment"
+        tools:layout="@layout/fragment_authorization" >
+        <action
+            android:id="@+id/action_logFragment_to_userFragment"
+            app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_logFragment_to_regFragment"
+            app:destination="@id/registration_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/registration_fragment"
+        android:name="com.abramchuk.itbookstore.ui.account.RegistrationFragment"
+        tools:layout="@layout/fragment_registration" >
+        <action
+            android:id="@+id/action_regFragment_to_logFragment"
+            app:destination="@id/login_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.abramchuk.itbookstore.ui.newBooks.NewBooksFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_new_books" >
+        <action
+            android:id="@+id/action_booksFragment_to_bookInfoFragment"
+            app:destination="@id/bookInfoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="com.abramchuk.itbookstore.ui.bookSearch.DashboardFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_book_search" >
+        <action
+            android:id="@+id/action_dashboardFragment_to_bookSearchFragment"
+            app:destination="@id/navigation_bookSearch" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_bookSearch"
+        android:name="com.abramchuk.itbookstore.ui.foundBooks.FoundBooksFragment"
+        android:label="Search"
+        tools:layout="@layout/fragment_found_books" >
+        <action
+            android:id="@+id/action_bookSearchFragment_to_bookInfoFragment"
+            app:destination="@id/bookInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.abramchuk.itbookstore.ui.favourites.FavouritesFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_favourites" >
+        <action
+            android:id="@+id/action_favFragment_to_logFragment"
+            app:destination="@id/login_fragment" />
+        <action
+            android:id="@+id/action_favFragment_to_bookInfoFragment"
+            app:destination="@id/bookInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookInfoFragment"
+        android:name="com.abramchuk.itbookstore.ui.bookinfo.BookInfoFragment"
+        android:label="fragment_book_info"
+        tools:layout="@layout/fragment_book_info" />
+
+</navigation>

@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">ITBookStore</string>
+    <string name="title_home">New Books</string>
+    <string name="title_dashboard">Search Books</string>
+    <string name="title_notifications">Favourites</string>
+    <string name="book_title">title</string>
+    <string name="book_subtitle">subtitle</string>
+    <string name="authors">authors</string>
+    <string name="about_book">about book</string>
+    <string name="find_more">find more</string>
+    <string name="hello_blank_fragment">Search books by title, author, ISBN or keywords</string>
+    <string name="search_btn">Find</string>
+    <string name="login">login</string>
+    <string name="password">password</string>
+    <string name="login_btn">LOG IN</string>
+    <string name="wrong_input_textview">Wrong login or password</string>
+    <string name="registration">REGISTRATION</string>
+    <string name="email">email</string>
+</resources>
