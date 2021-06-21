@@ -1,26 +1,21 @@
 package com.abramchuk.itbookstore.ui.favourites
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.abramchuk.itbookstore.R
 import com.abramchuk.itbookstore.databinding.FragmentFavouritesBinding
-import com.abramchuk.itbookstore.databinding.FragmentNewBooksBinding
 import com.abramchuk.itbookstore.db.AppDatabase
 import com.abramchuk.itbookstore.db.UserDao
 import com.abramchuk.itbookstore.dto.Book
 import com.abramchuk.itbookstore.dto.User
 import com.abramchuk.itbookstore.manager.BookManager
-import com.abramchuk.itbookstore.manager.NetworkManager
 import com.abramchuk.itbookstore.ui.BookClickListener
 import com.abramchuk.itbookstore.ui.newBooks.NewBooksAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,7 +28,6 @@ import kotlinx.coroutines.withContext
 @AndroidEntryPoint
 class FavouritesFragment : Fragment(), BookClickListener {
     var navController: NavController?=null
-    private lateinit var viewModel: FavouritesViewModel
     private lateinit var binding: FragmentFavouritesBinding
     lateinit var bookManager: BookManager
     private lateinit var user: User
@@ -61,8 +55,8 @@ class FavouritesFragment : Fragment(), BookClickListener {
     ): View {
         binding = FragmentFavouritesBinding.inflate(inflater, container, false)
         bookManager = BookManager(requireContext())
-        val logoutBtn = binding.logoutBtn
-        logoutBtn.setOnClickListener {
+
+        binding.logoutBtn.setOnClickListener {
             GlobalScope.launch(Dispatchers.IO) {
                 withContext(Dispatchers.IO) {
                     userDao?.deactivateAll()
@@ -70,7 +64,6 @@ class FavouritesFragment : Fragment(), BookClickListener {
             }
             navController!!.navigate(R.id.action_favFragment_to_logFragment)
         }
-        val view = binding.root
 
         GlobalScope.launch(Dispatchers.IO) {
             val books = bookManager.getFavourites()
@@ -78,8 +71,7 @@ class FavouritesFragment : Fragment(), BookClickListener {
                 showUi(books)
             }
         }
-
-        return view
+        return binding.root
     }
 
     private fun showUi(data: List<Book>) {
@@ -88,7 +80,6 @@ class FavouritesFragment : Fragment(), BookClickListener {
     }
 
     override fun onCellClickListener(item: Book, position: Int) {
-        Log.d("TEST_RESP", "click, item id = "+item.isbn13)
         val bundle = bundleOf("book_id" to item.isbn13)
         navController!!.navigate(
                 R.id.action_favFragment_to_bookInfoFragment,

@@ -50,8 +50,8 @@ class BookManager(context: Context) {
         return books
     }
 
-    suspend fun downloadBooksByName(animeName: String, page:String): BookResponse {
-        val listResponse = ApiService.getInstance().getBooksData(animeName, page)
+    suspend fun downloadBooksByName(title: String, page:String): BookResponse {
+        val listResponse = ApiService.getInstance().getBooksData(title, page)
         val books = listResponse.books
         GlobalScope.launch(Dispatchers.IO) {
             withContext(Dispatchers.IO) {
@@ -75,23 +75,6 @@ class BookManager(context: Context) {
         return bookDao?.findByIsbn13(id)
     }
 
-
-//    private fun markAnime(item: Anime, labelName: String) {
-//        val user = userDao?.getActiveUser()
-//        val anime = bookDao?.getAnimeByMalId(item.mal_id)
-//        if (user != null && anime != null) {
-//            val existingAnime =
-//                    userAnimeDao?.getAnimesByUserAnimeAndType(user.id, anime.id, labelName)
-//            if (!existingAnime.isNullOrEmpty()) {
-//                for (exAnime in existingAnime) {
-//                    userAnimeDao?.deleteAnime(exAnime.id)
-//                }
-//            } else {
-//                userAnimeDao?.insert(UserAnime(user.id, anime.id, labelName))
-//            }
-//        }
-//    }
-
     private suspend fun saveBooksToDb(books: List<Book>) {
         for (book in books) {
             val dbBook = bookDao?.findByIsbn13(book.isbn13)
@@ -101,8 +84,6 @@ class BookManager(context: Context) {
             }
         }
     }
-
-
 
     private fun convertFavouritesToBooks(favourites: List<Favourites>?): List<Book> {
         val books = mutableListOf<Book>()

@@ -22,13 +22,13 @@ import kotlinx.coroutines.withContext
 
 class AuthorizationFragment : Fragment() {
     private var binding: FragmentAuthorizationBinding?=null
-    var navController: NavController?=null
-    var userDao : UserDao? = null
+    private var navController: NavController?=null
+    private var userDao : UserDao? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         userDao = AppDatabase.createDb(requireContext()).getUserDAO()
         binding = FragmentAuthorizationBinding.inflate(inflater, container, false)
         return binding!!.root
@@ -39,8 +39,8 @@ class AuthorizationFragment : Fragment() {
         navController = Navigation.findNavController(view)
         val inputUser = binding?.loginEditText
         val inputPass = binding?.passwordEditText
-        var user: User? = null
-        var usersFromDB:List<User>?=null
+        var user: User?
+        var usersFromDB: List<User>?
         GlobalScope.launch(Dispatchers.IO) {
             withContext(Dispatchers.IO) {
                 usersFromDB = userDao?.findActiveUser()
@@ -66,7 +66,7 @@ class AuthorizationFragment : Fragment() {
     private fun authorize(username: String, pass: String){
         GlobalScope.launch(Dispatchers.IO) {
             withContext(Dispatchers.IO) {
-                var user : User? = null
+                val user: User?
                 val usersFromDB = userDao?.findUser(username, pass)
                 if (!usersFromDB.isNullOrEmpty()) {
                     user = usersFromDB[0]

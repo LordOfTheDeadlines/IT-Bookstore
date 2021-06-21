@@ -19,13 +19,13 @@ import kotlinx.coroutines.withContext
 
 class RegistrationFragment:Fragment() {
     private var binding: FragmentRegistrationBinding?=null
-    var navController: NavController?=null
-    var userDao : UserDao? = null
+    private var navController: NavController?=null
+    private var userDao : UserDao? = null
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         userDao = AppDatabase.createDb(requireContext()).getUserDAO()
         binding = FragmentRegistrationBinding.inflate(inflater, container, false)
         return binding!!.root

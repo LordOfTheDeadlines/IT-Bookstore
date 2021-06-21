@@ -24,13 +24,13 @@ interface ApiService {
 
     companion object {
         const val HOST = "https://api.itbook.store/1.0/"
-        fun makeClient() = OkHttpClient.Builder()
+        private fun makeClient(): OkHttpClient = OkHttpClient.Builder()
             .connectTimeout(5, TimeUnit.MINUTES)
             .writeTimeout(5, TimeUnit.MINUTES)
             .readTimeout(5, TimeUnit.MINUTES)
-            .build();
+            .build()
 
-        fun getInstance() = Retrofit.Builder()
+        fun getInstance(): ApiService = Retrofit.Builder()
             .baseUrl(HOST)
             .addConverterFactory(GsonConverterFactory.create())
             .client(makeClient())

@@ -3,7 +3,6 @@ package com.abramchuk.itbookstore.ui.bookinfo
 import android.content.Intent
 import android.os.Bundle
 import android.text.util.Linkify
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,14 +22,13 @@ import kotlinx.coroutines.withContext
 @AndroidEntryPoint
 class BookInfoFragment : Fragment() {
     private var binding: FragmentBookInfoBinding?=null
-    var navController: NavController?=null
+    private var navController: NavController?=null
     private lateinit var bookId: String
-    lateinit var bookManager: BookManager
+    private lateinit var bookManager: BookManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bookId = requireArguments().getString("book_id").toString()
-        Log.d("TEST_RESP", "id = "+bookId)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,7 +40,7 @@ class BookInfoFragment : Fragment() {
             val book = bookManager.getBooksISBN13(bookId)
             val isFavBtn = binding?.isFavouriteBtn
             val shareBtn = binding?.shareBtn
-            var isFav:Boolean? = null
+            var isFav: Boolean?
             GlobalScope.launch(Dispatchers.IO) {
                 withContext(Dispatchers.IO) {
                     isFav = book?.let { bookManager.isFavourite(it) } == true
@@ -53,17 +51,16 @@ class BookInfoFragment : Fragment() {
             }
 
             shareBtn?.setOnClickListener {
-                val myIntent = Intent(Intent.ACTION_SEND);
-                myIntent.type = "text/plain";
-                val body = "Your body here";
-                val sub = "Your Subject";
-                myIntent.putExtra(Intent.EXTRA_SUBJECT,sub);
-                myIntent.putExtra(Intent.EXTRA_TEXT,body);
+                val myIntent = Intent(Intent.ACTION_SEND)
+                myIntent.type = "text/plain"
+                val body = "Your body here"
+                val sub = "Your Subject"
+                myIntent.putExtra(Intent.EXTRA_SUBJECT,sub)
+                myIntent.putExtra(Intent.EXTRA_TEXT,body)
                 startActivity(Intent.createChooser(myIntent, "Share Using"))
             }
 
-            withContext(Dispatchers.Main) {
-                Log.d("TEST_RESP", book.toString())
+            withContext(Main) {
                 binding?.title?.text = book?.title
                 binding?.subtitle?.text = book?.subtitle
                 binding?.authors?.text = book?.authors

@@ -1,6 +1,5 @@
 package com.abramchuk.itbookstore.ui.newBooks
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,7 +21,7 @@ class NewBooksViewModel @Inject constructor(private val repository: BookReposito
         loadBooks()
     }
 
-    fun loadBooks() {
+    private fun loadBooks() {
         viewModelScope.launch {
             _book.value = Result.loading(true)
             _book.value = repository.getNewBooks()

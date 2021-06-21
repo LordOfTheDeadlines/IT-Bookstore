@@ -8,7 +8,7 @@
     android:layout_marginTop="32dp"
     android:layout_marginEnd="16dp"
     android:orientation="vertical"
-    tools:context=".ui.bookSearch.DashboardFragment">
+    tools:context=".ui.bookSearch.BookSearchFragment">
 
     <TextView
         android:layout_width="match_parent"
