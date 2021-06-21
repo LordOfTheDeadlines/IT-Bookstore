@@ -27,11 +27,11 @@ import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class FavouritesFragment : Fragment(), BookClickListener {
-    var navController: NavController?=null
+    private var navController: NavController?=null
     private lateinit var binding: FragmentFavouritesBinding
-    lateinit var bookManager: BookManager
+    private lateinit var bookManager: BookManager
     private lateinit var user: User
-    var userDao : UserDao? = null
+    private var userDao : UserDao? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

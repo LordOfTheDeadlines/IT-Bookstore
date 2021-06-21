@@ -17,4 +17,8 @@
     <string name="registration">REGISTRATION</string>
     <string name="email">email</string>
     <string name="logout">LOGOUT</string>
+    <string name="delete_from_favourites">DELETE FROM FAVOURITES</string>
+    <string name="add_to_favourites">ADD TO FAVOURITES</string>
+    <string name="book_image">Book image</string>
+    <string name="_10_00">10.00$</string>
 </resources>
