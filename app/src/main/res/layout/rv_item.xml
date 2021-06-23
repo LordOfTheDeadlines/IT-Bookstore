@@ -58,7 +58,6 @@
                         android:layout_weight="100"
                         android:fontFamily="sans-serif-medium"
                         android:text="title"
-                        android:textColor="@color/black"
                         android:textSize="14sp" />
 
                 </LinearLayout>
@@ -81,8 +80,7 @@
             android:fontFamily="sans-serif-medium"
             android:paddingEnd="8dp"
             android:paddingBottom="10dp"
-            android:text="10$"
-            android:textColor="@android:color/secondary_text_light" />
+            android:text="10$" />
     </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
