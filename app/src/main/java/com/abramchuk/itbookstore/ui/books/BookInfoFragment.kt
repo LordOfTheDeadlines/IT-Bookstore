@@ -53,7 +53,7 @@ class BookInfoFragment : Fragment() {
             shareBtn?.setOnClickListener {
                 val myIntent = Intent(Intent.ACTION_SEND)
                 myIntent.type = "text/plain"
-                val body = "Your body here"
+                val body = book?.title +" - "+ book?.url
                 val sub = "Your Subject"
                 myIntent.putExtra(Intent.EXTRA_SUBJECT,sub)
                 myIntent.putExtra(Intent.EXTRA_TEXT,body)
